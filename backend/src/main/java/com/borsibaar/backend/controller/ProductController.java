@@ -27,4 +27,9 @@ public class ProductController {
     public ProductResponse get(@PathVariable Long id) {
         return service.getById(id);
     }
+
+    @DeleteMapping("/{id}")
+    public ProductResponse delete(@PathVariable Long id) {
+        return service.getById(id);
+    }
 }

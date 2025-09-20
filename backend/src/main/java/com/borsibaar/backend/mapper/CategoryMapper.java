@@ -13,11 +13,13 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface CategoryMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "organizationId", ignore = true)
     Category toEntity(CategoryRequest request);
 
     CategoryResponse toResponse(Category category);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "organizationId", ignore = true)
     void updateEntity(@MappingTarget Category category, CategoryRequest request);
 }

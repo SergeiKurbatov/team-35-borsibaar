@@ -18,7 +18,8 @@ public class CategoryController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CategoryResponse createCategory(@RequestBody CategoryRequest request) {
-        return categoryService.categoryResponse(request);
+        return categoryService.create(request);
     }
 
 }
+
