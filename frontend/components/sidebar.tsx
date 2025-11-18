@@ -78,7 +78,7 @@ function SidebarFooterContent() {
     <SidebarMenu>
       <SidebarMenuItem>
         <SidebarMenuButton size="lg" onClick={handleLogout} tooltip="Logout">
-          <LogOut className="!w-5 !h-5" />
+          <LogOut className="!w-6 !h-6" />
           {!isCollapsed && <span className="text-lg font-medium">Logout</span>}
         </SidebarMenuButton>
       </SidebarMenuItem>
