@@ -162,32 +162,6 @@ export default function Dashboard() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <Link
-              href="/inventory"
-              className="block p-4 bg-blue-100 dark:bg-blue-900 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
-            >
-              <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-2">
-                Inventory Management
-              </h3>
-              <p className="text-blue-600 dark:text-blue-300 text-sm">
-                Manage stock levels, add products, and track inventory changes
-              </p>
-            </Link>
-
-            <Link
-              href="/pos"
-              className="block p-4 bg-green-100 dark:bg-green-900 rounded-lg hover:bg-green-200 dark:hover:bg-green-800 transition-colors"
-            >
-              <h3 className="text-lg font-semibold text-green-800 dark:text-green-200 mb-2">
-                Point of Sales
-              </h3>
-              <p className="text-green-600 dark:text-green-300 text-sm">
-                Process sales, manage cart, and handle customer transactions
-              </p>
-            </Link>
-          </div>
-
           {stationStats.length > 0 && (
             <div className="rounded-lg bg-card p-6 shadow mb-6">
               <h2 className="text-xl font-semibold text-card-foreground mb-4">
