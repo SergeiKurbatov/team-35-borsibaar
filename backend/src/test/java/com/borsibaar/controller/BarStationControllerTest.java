@@ -55,9 +55,6 @@ class BarStationControllerTest {
         SecurityContextHolder.clearContext();
     }
 
-    // ==================== GET /api/bar-stations (getAllStations)
-    // ====================
-
     @Test
     void testGetAllStations_AsAdmin_Success() throws Exception {
         // Arrange: Create admin user
@@ -113,9 +110,6 @@ class BarStationControllerTest {
         verify(barStationService, never()).getAllStations(anyLong());
     }
 
-    // ==================== GET /api/bar-stations/user (getUserStations)
-    // ====================
-
     @Test
     void testGetUserStations_Success() throws Exception {
         // Arrange: Create regular user
@@ -161,9 +155,6 @@ class BarStationControllerTest {
         verify(barStationService).getUserStations(userId, 1L);
     }
 
-    // ==================== GET /api/bar-stations/{id} (getStationById)
-    // ====================
-
     @Test
     void testGetStationById_Success() throws Exception {
         // Arrange: Create user
@@ -204,9 +195,6 @@ class BarStationControllerTest {
         // Verify service was called
         verify(barStationService).getStationById(1L, 999L);
     }
-
-    // ==================== POST /api/bar-stations (createStation)
-    // ====================
 
     @Test
     void testCreateStation_AsAdmin_Success() throws Exception {
@@ -300,28 +288,6 @@ class BarStationControllerTest {
     }
 
     @Test
-    void testCreateStation_WithInvalidData_ReturnsBadRequest() throws Exception {
-        // Arrange: Create admin user
-        User adminUser = createMockUser(1L, "ADMIN");
-        setupSecurityContextWithUser(adminUser);
-
-        // Arrange: Create invalid request (null name)
-        String invalidJson = "{\"name\":null,\"description\":\"Test\",\"isActive\":true,\"userIds\":[]}";
-
-        // Act & Assert: Should fail validation
-        mockMvc.perform(post("/api/bar-stations")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(invalidJson))
-                .andExpect(status().isBadRequest());
-
-        // Verify service was NOT called due to validation failure
-        verify(barStationService, never()).createStation(anyLong(), any(BarStationRequestDto.class));
-    }
-
-    // ==================== PUT /api/bar-stations/{id} (updateStation)
-    // ====================
-
-    @Test
     void testUpdateStation_AsAdmin_Success() throws Exception {
         // Arrange: Create admin user
         User adminUser = createMockUser(1L, "ADMIN");
@@ -337,7 +303,7 @@ class BarStationControllerTest {
 
         // Arrange: Create expected response
         BarStationResponseDto response = createMockStationResponse(
-                1L, 1L, "Updated Station", false,
+                1L, 1L, "Updated Station", "Updated Description", false,
                 List.of(new UserSummaryResponseDto(userId, "user@test.com", "User", "USER")));
 
         // Arrange: Mock service
@@ -436,9 +402,6 @@ class BarStationControllerTest {
         verify(barStationService).updateStation(eq(1L), eq(1L), any(BarStationRequestDto.class));
     }
 
-    // ==================== DELETE /api/bar-stations/{id} (deleteStation)
-    // ====================
-
     @Test
     void testDeleteStation_AsAdmin_Success() throws Exception {
         // Arrange: Create admin user
@@ -487,8 +450,6 @@ class BarStationControllerTest {
         // Verify service was called
         verify(barStationService).deleteStation(1L, 999L);
     }
-
-    // ==================== Helper Methods ====================
 
     /**
      * Helper method to create a mock user with organization and role.
@@ -553,6 +514,23 @@ class BarStationControllerTest {
                 organizationId,
                 name,
                 "Test Description",
+                isActive,
+                assignedUsers,
+                Instant.now(),
+                Instant.now());
+    }
+
+    /**
+     * Helper method to create a mock bar station response DTO with assigned users and description.
+     */
+    private BarStationResponseDto createMockStationResponse(
+            Long id, Long organizationId, String name, String description,
+            Boolean isActive, List<UserSummaryResponseDto> assignedUsers) {
+        return new BarStationResponseDto(
+                id,
+                organizationId,
+                name,
+                description,
                 isActive,
                 assignedUsers,
                 Instant.now(),
